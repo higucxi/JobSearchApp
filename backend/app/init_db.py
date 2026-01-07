@@ -1,5 +1,5 @@
-from app.database import sync_engine, Base
-from app.models import Job, JobSource, Application, SearchCache
+from .database import sync_engine, Base
+from .models import Job, JobSource, Application, SearchCache
 
 def init_db():
     print("creating database tables...")
