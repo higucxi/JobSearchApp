@@ -75,7 +75,7 @@ def normalize_title(title: str) -> str:
         r'\bui/ux\b': 'ui ux',
     }
 
-    for pattern, replacement in replacements:
+    for pattern, replacement in replacements.items():
         normalized = re.sub(pattern, replacement, normalized)
 
     # remove special characters except spaces and slashes
@@ -142,9 +142,13 @@ def is_duplicate_job(
 
     norm_title1 = normalize_title(title1)
     norm_title2 = normalize_title(title2)
+    title_similarity = calculate_text_similarity(norm_title1, norm_title2)
 
-    if norm_company1 != norm_company2 or norm_title1 != norm_title2:
+    if norm_company1 != norm_company2:
         return False, 0.0
+    
+    if title_similarity < 0.75:
+        return False, title_similarity
     
     # desc scores based on first 1000 characters
     # idea: job title in practice is almost always the same across different websites
