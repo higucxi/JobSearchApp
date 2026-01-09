@@ -159,3 +159,53 @@ def is_duplicate_job(
         return True, desc_similarity
     
     return False, desc_similarity
+
+def extract_exclusion_terms(query: str) -> Tuple[str, list]:
+    """
+    Given a search query, will extract terms to be excluded from
+    search results.
+
+    Example:
+    - "python -senior -staff" -> ("python", ["senior", "staff"])
+    - "react -remote" -> ("react", ["remote"])
+    
+    :param query: search query
+    :type query: str
+    :return: query with extracted terms removed, and a list of those excluded terms
+    :rtype: Tuple[str, list]
+    """
+    exclusion_terms = []
+
+    # find all terms starting with minus
+    exclusion_pattern = r'-(\w+)'
+    matches = re.finditer(exclusion_pattern, query)
+
+    for match in matches:
+        exclusion_terms.append(match.group(1).lower())
+
+    # remove exclusion terms from query
+    cleaned_query = re.sub(exclusion_pattern, '', query).strip()
+    
+    # collapse whitespaces
+    cleaned_query = re.sub(r'\s+', '', cleaned_query)
+
+    return cleaned_query, exclusion_terms
+
+def tokenize_for_search(text: str) -> list:
+    """
+    tokenization of text for search.
+    Converts text to lowercase tokens, removing special characters.
+    
+    :param text: given text for a search
+    :type text: str
+    :return: list of corresponding tokens
+    :rtype: list
+    """
+    text = text.lower()
+
+    # keep only alphanumeric and spaces
+    text = re.sub(r'[^\w\s]', ' ', text)
+
+    # split and filter empty
+    tokens = [t for t in text.split() if t]
+    return tokens
