@@ -177,3 +177,86 @@ class JobCRUD:
         )
         result = await self.session.execute(stmt)
         return result.scalar_one_or_none()
+
+class ApplicationCRUD:
+    """CRUD operations for application tracking."""
+
+    def __init__(self, session: AsyncSession):
+        self.session = session
+    
+    async def create_or_update(
+            self,
+            job_id: UUID,
+            app_data: ApplicationCreate
+    ) -> Application:
+        """Create or Update an Application"""
+        # check if application exists
+        stmt = select(Application).filter(Application.job_id == job_id)
+        result = await self.session.execute(stmt)
+        application = result.scalar_one_or_none()
+
+        if application:
+            # update existing
+            application.status = app_data.status
+            if app_data.notes is not None:
+                application.notes = app_data.notes
+        else:
+            # create new
+            application = Application(
+                job_id = job_id,
+                status = app_data.status,
+                notes = app_data.notes
+            )
+            self.session.add(application)
+
+        await self.session.commit()
+        await self.session.refresh(application)
+
+        return application
+    
+    async def update(
+            self,
+            job_id: UUID,
+            app_data: ApplicationUpdate
+    ) -> Optional[Application]:
+        """Update application fields."""
+
+        stmt = select(Application).filter(Application.job_id == job_id)
+        result = await self.session.execute(stmt)
+        application = result.scalar_one_or_none()
+
+        if not application:
+            return None
+
+        if app_data.status:
+            application.status = app_data.status
+        if app_data.notes is not None:
+            application.notes = app_data.notes
+        
+        await self.session.commit()
+        await self.session.refresh(application)
+
+        return application
+
+    async def get_all(self) -> List[Application]:
+        """Get all tracked applications."""
+        stmt = select(Application).options(
+            selectinload(Application.job).selectinload(Job.sources)
+        ).order_by(Application.updated_at.desc())
+
+        result = await self.session.execute(stmt)
+        return result.scalars().all()
+    
+    async def delete(self, job_id: UUID) -> bool:
+        """Delete an application."""
+        stmt = select(Application).filter(Application.job_id == job_id)
+        result = await self.session.execute(stmt)
+        application = result.scalar_one_or_none()
+
+        if not application:
+            return False
+        
+        await self.session.delete(application)
+        await self.session.commit()
+
+        return True
