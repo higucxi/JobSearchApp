@@ -191,7 +191,7 @@ def extract_exclusion_terms(query: str) -> Tuple[str, list]:
     cleaned_query = re.sub(exclusion_pattern, '', query).strip()
     
     # collapse whitespaces
-    cleaned_query = re.sub(r'\s+', '', cleaned_query)
+    cleaned_query = re.sub(r'\s+', ' ', cleaned_query)
 
     return cleaned_query, exclusion_terms
 
@@ -208,8 +208,9 @@ def tokenize_for_search(text: str) -> list:
     text = text.lower()
 
     # keep only alphanumeric and spaces
-    text = re.sub(r'[^\w\s]', ' ', text)
+    # text = re.sub(r'[^\w\s]', ' ', text)
 
-    # split and filter empty
-    tokens = [t for t in text.split() if t]
+    # # split and filter empty
+    # tokens = [t for t in text.split() if t]
+    tokens = re.findall(r'\d+(?:\.\d+)?|\w+', text)
     return tokens
