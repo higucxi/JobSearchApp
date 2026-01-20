@@ -132,8 +132,8 @@ class JobCRUD:
     ) -> Job:
         """Create a new job with its first source"""
         job = Job(
-            normalize_company = norm_company,
-            normalize_title = norm_title,
+            normalized_company = norm_company,
+            normalized_title = norm_title,
             original_title = job_input.title,
             description = job_input.description,
             location = job_input.location,

@@ -1,6 +1,6 @@
-from sqlalchemy import Column, String, Text, DateTime, ForeignKey, Integer, Float, Index, func
+from sqlalchemy import Column, String, Text, DateTime, ForeignKey, Integer, Float, Index, func, JSON
 from sqlalchemy.dialects.postgresql import UUID, JSONB, TSVECTOR
-from sqlalchemy.orm import relationship
+from sqlalchemy.orm import relationship, mapped_column
 from datetime import datetime, timezone
 import uuid
 from .database import Base
@@ -20,7 +20,10 @@ class Job(Base):
     created_at = Column(DateTime, default = datetime.now(timezone.utc), nullable = False)
 
     # PostgreSQL full-text search
-    search_vector = Column(TSVECTOR)
+    search_vector = mapped_column(
+        TSVECTOR().with_variant(Text(), "sqlite"),
+        nullable=True
+    )
 
     # Relationships
     sources = relationship("JobSource", back_populates = "job", cascade = "all, delete-orphan")
@@ -68,8 +71,14 @@ class SearchCache(Base):
     
     id = Column(Integer, primary_key = True, autoincrement = True)
     query_hash = Column(String(64), unique = True, nullable = False, index = True)
-    query_params = Column(JSONB, nullable = False)
-    results = Column(JSONB, nullable = False)
+    query_params = mapped_column(
+        JSONB().with_variant(JSON(), "sqlite"),
+        nullable=False
+    )
+    results = mapped_column(
+        JSONB().with_variant(JSON(), "sqlite"),
+        nullable=False
+    )
     hit_count = Column(Integer, default = 1)
     created_at = Column(DateTime, default = datetime.now(timezone.utc), nullable = False)
     updated_at = Column(DateTime, default = datetime.now(timezone.utc), onupdate = datetime.now(timezone.utc), nullable = False)

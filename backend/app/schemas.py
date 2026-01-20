@@ -1,4 +1,4 @@
-from pydantic import BaseModel
+from pydantic import BaseModel, ConfigDict
 from datetime import datetime
 from typing import List, Optional, Literal
 from uuid import UUID
@@ -27,8 +27,7 @@ class JobSourceResponse(BaseModel):
     source: str
     url: str
 
-    class Config:
-        from_attributes = True
+    model_config = ConfigDict(from_attributes=True)
 
 class JobSearchResult(BaseModel):
     job_id: UUID
@@ -40,8 +39,7 @@ class JobSearchResult(BaseModel):
     sources: List[JobSourceResponse]
     application_status: Optional[str] = None
 
-    class Config:
-        from_attributes = True
+    model_config = ConfigDict(from_attributes=True)
 
 class JobSearchResponse(BaseModel):
     results: List[JobSearchResult]
@@ -61,8 +59,7 @@ class JobDetailResponse(BaseModel):
     application_status: Optional[str] = None
     application_notes: Optional[str] = None
 
-    class Config:
-        from_attributes = True
+    model_config = ConfigDict(from_attributes=True)
 
 # Application Schemas
 class ApplicationCreate(BaseModel):
@@ -80,5 +77,4 @@ class ApplicationResponse(BaseModel):
     updated_at: datetime
     job: JobSearchResult
 
-    class Config:
-        from_attributes = True
+    model_config = ConfigDict(from_attributes=True)
