@@ -57,16 +57,16 @@ class JobSearchEngine:
 
         # company filter
         if company:
-            filter.append(Job.normalized_company.ilike(f"%{company.lower()}%"))
+            filters.append(Job.normalized_company.ilike(f"%{company.lower()}%"))
 
         # location filter
         if location:
-            filter.append(Job.location.ilike(f"%{location.lower()}%"))
+            filters.append(Job.location.ilike(f"%{location.lower()}%"))
         
         # date filter
         if days:
             cutoff_date = datetime.now(UTC) - timedelta(days = days)
-            filter.append(Job.date_posted >= cutoff_date)
+            filters.append(Job.date_posted >= cutoff_date)
 
         # source filter
         if source:
