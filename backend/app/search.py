@@ -122,11 +122,62 @@ class JobSearchEngine:
 
         Returns None if job should be excluded.
         """
-        pass
+        # if no search terms, return date-based score
+        if not search_terms:
+            return self._get_recency_boost(job.date_posted)
+        
+        # check exclusion terms first (hard filter)
+        if exclusion_terms:
+            job_text = f"{job.original_title} {job.description}".lower()
+            
+            for term in exclusion_terms:
+                if term in job_text:
+                    return None # exclude this job
+        
+        # tokenize job fields
+        title_tokens = tokenize_for_search(job.original_title)
+        desc_tokens = tokenize_for_search(job.description)
+
+        title_score = 0.0
+        desc_score = 0.0
+
+        # calculate TF for each search term
+        for term in search_terms:
+            # title matches (weight = 1.0)
+            title_tf = title_tokens.count(term)
+            if title_tf > 0:
+                # diminishing returns for multiple occurences
+                title_score += 1.0 * math.log(1 + title_tf)
+            
+            # description matches (weight = 3.0)
+            desc_tf = desc_tokens.count(term)
+            if desc_tf > 0:
+                desc_score += 3.0 * math.log(1 + desc_tf)
+        
+        # combined score
+        relevance = title_score + desc_score
+
+        # no matches at all
+        if relevance == 0:
+            return None
+        
+        # normalize by query length
+        relevance = relevance / len(search_terms)
+
+        # add recency boost
+        recency_boost = self._get_recency_boost(job.date_posted)
+        relevance += recency_boost
+
+        return relevance
 
     def _get_recency_boost(self, date_posted: datetime) -> float:
         """
         Small boost for recent postings.
         Jobs in last 7 days get up to 0.5 boost.
         """
-        pass
+        days_ago = (datetime.now(UTC) - date_posted).days
+
+        if days_ago <= 7:
+            return 0.5 * (1 - days_ago / 7)
+
+        return 0.0
