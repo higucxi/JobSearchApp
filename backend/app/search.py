@@ -175,6 +175,8 @@ class JobSearchEngine:
         Small boost for recent postings.
         Jobs in last 7 days get up to 0.5 boost.
         """
+        if date_posted.tzinfo is None:
+            date_posted = date_posted.replace(tzinfo=UTC)
         days_ago = (datetime.now(UTC) - date_posted).days
 
         if days_ago <= 7:

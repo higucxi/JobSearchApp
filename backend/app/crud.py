@@ -60,7 +60,11 @@ class JobCRUD:
                 # Merge: add new source to existing job
                 await self._add_job_source(
                     duplicate_job.id,
-                    source,
+                    # note source is directly passed when dupe, but below when inserting new job
+                    # source is not passed but job_input alone is passed, and the source
+                    # is relied on by job_input.source
+                    # a potential source of issue is if job_input.source != source
+                    source, 
                     job_input.id,
                     job_input.url
                 )
