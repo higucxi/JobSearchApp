@@ -1,7 +1,7 @@
 import { BrowserRouter as Router, Routes, Route, Link, useLocation } from 'react-router-dom';
 import SearchPage from './pages/SearchPage';
 import JobDetailPage from './pages/JobDetailPage';
-import ApplicationsPage from './pages/ApplicationPage';
+import ApplicationPage from './pages/ApplicationPage';
 
 function Navigation() {
     const location = useLocation();
@@ -50,7 +50,7 @@ function App() {
             <Routes>
                 <Route path="/" element={<SearchPage />} />
                 <Route path="/job/:jobId" element={<JobDetailPage />} />
-                <Route path="/applications" element={<ApplicationsPage />} />
+                <Route path="/applications" element={<ApplicationPage />} />
             </Routes>
             </main>
         </div>
