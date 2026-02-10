@@ -1,0 +1,105 @@
+{
+  "source": "manual",
+  "jobs": [
+    {
+      "id": "job-001",
+      "source": "linkedin",
+      "company": "Google LLC",
+      "title": "Software Engineer",
+      "description": "We're looking for a talented Software Engineer to join our team. You'll work on building scalable distributed systems using Python, Go, and modern cloud technologies. Experience with Kubernetes and microservices architecture is a plus.",
+      "location": "Mountain View, CA",
+      "url": "https://linkedin.com/jobs/google-swe-001",
+      "date_posted": "2025-01-01T10:00:00Z"
+    },
+    {
+      "id": "job-002",
+      "source": "indeed",
+      "company": "Meta",
+      "title": "Senior Software Engineer",
+      "description": "Join Meta to build the future of social technology. We're seeking experienced engineers to work on React, GraphQL, and large-scale infrastructure. This is a senior-level position requiring 5+ years of experience.",
+      "location": "Menlo Park, CA",
+      "url": "https://indeed.com/jobs/meta-senior-002",
+      "date_posted": "2024-12-28T14:30:00Z"
+    },
+    {
+      "id": "job-003",
+      "source": "greenhouse",
+      "company": "Stripe Inc",
+      "title": "Backend Engineer",
+      "description": "Build payment infrastructure for the internet. Work with Ruby, Python, and modern databases. We're looking for someone passionate about APIs and distributed systems.",
+      "location": "San Francisco, CA (Remote OK)",
+      "url": "https://stripe.com/jobs/backend-003",
+      "date_posted": "2025-01-02T09:00:00Z"
+    },
+    {
+      "id": "job-004",
+      "source": "lever",
+      "company": "Airbnb",
+      "title": "Frontend Engineer",
+      "description": "Create amazing user experiences with React and TypeScript. Join our frontend team to build the next generation of travel products. Strong CSS and design skills required.",
+      "location": "San Francisco, CA",
+      "url": "https://airbnb.com/careers/frontend-004",
+      "date_posted": "2024-12-30T11:00:00Z"
+    },
+    {
+      "id": "job-005",
+      "source": "manual",
+      "company": "Netflix",
+      "title": "Staff Software Engineer",
+      "description": "Lead technical initiatives at Netflix. This staff-level position requires deep expertise in distributed systems, Java, and cloud infrastructure. You'll mentor junior engineers and drive architectural decisions.",
+      "location": "Los Gatos, CA",
+      "url": "https://netflix.com/jobs/staff-005",
+      "date_posted": "2024-12-25T16:00:00Z"
+    },
+    {
+      "id": "job-006",
+      "source": "linkedin",
+      "company": "Amazon",
+      "title": "Software Development Engineer",
+      "description": "Work on AWS services used by millions. Build highly available systems with Java and Python. Experience with distributed systems and databases required.",
+      "location": "Seattle, WA (Remote Available)",
+      "url": "https://linkedin.com/jobs/amazon-sde-006",
+      "date_posted": "2025-01-03T08:00:00Z"
+    },
+    {
+      "id": "job-007",
+      "source": "indeed",
+      "company": "Microsoft Corporation",
+      "title": "Software Engineer II",
+      "description": "Join Azure to build cloud infrastructure. Work with C#, .NET, and Kubernetes. This is a mid-level position perfect for engineers with 2-4 years of experience.",
+      "location": "Redmond, WA",
+      "url": "https://indeed.com/jobs/microsoft-se2-007",
+      "date_posted": "2024-12-29T13:00:00Z"
+    },
+    {
+      "id": "job-008",
+      "source": "greenhouse",
+      "company": "Shopify",
+      "title": "Ruby Developer",
+      "description": "Build e-commerce solutions with Ruby on Rails. Work on our core platform used by millions of merchants. Strong understanding of web development and databases needed.",
+      "location": "Ottawa, Canada (Remote)",
+      "url": "https://shopify.com/careers/ruby-008",
+      "date_posted": "2025-01-01T12:00:00Z"
+    },
+    {
+      "id": "job-009",
+      "source": "lever",
+      "company": "Spotify",
+      "title": "Backend Engineer - Python",
+      "description": "Shape the future of music streaming. Build scalable APIs and data pipelines with Python. Experience with Kafka and event-driven architecture is a plus.",
+      "location": "Stockholm, Sweden (Remote Available)",
+      "url": "https://spotify.com/jobs/backend-python-009",
+      "date_posted": "2024-12-27T10:00:00Z"
+    },
+    {
+      "id": "job-010",
+      "source": "manual",
+      "company": "Tesla Inc",
+      "title": "Principal Software Engineer",
+      "description": "Lead software development for autonomous driving systems. This principal-level role requires extensive experience in C++, computer vision, and real-time systems. Shape the future of transportation.",
+      "location": "Palo Alto, CA",
+      "url": "https://tesla.com/careers/principal-010",
+      "date_posted": "2024-12-26T15:00:00Z"
+    }
+  ]
+}
