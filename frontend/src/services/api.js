@@ -19,6 +19,11 @@ export const getJobById = async (jobId) => {
     return response.data;
 };
 
+export const createApplication = async (jobId, data) => {
+  const response = await api.post(`/applications/${jobId}`, data);
+  return response.data;
+};
+
 export const getApplications = async () => {
     const response = await api.get('/applications');
     return response.data;
