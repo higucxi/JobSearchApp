@@ -1,7 +1,7 @@
 from sqlalchemy import Column, String, Text, DateTime, ForeignKey, Integer, Float, Index, func, JSON
 from sqlalchemy.dialects.postgresql import UUID, JSONB, TSVECTOR
 from sqlalchemy.orm import relationship, mapped_column
-from datetime import datetime, timezone
+from datetime import datetime, UTC
 import uuid
 from .database import Base
 
@@ -16,8 +16,8 @@ class Job(Base):
     original_title = Column(String(255), nullable = False)
     description = Column(Text, nullable = False)
     location = Column(String(255), index = True)
-    date_posted = Column(DateTime, nullable = False, index = True)
-    created_at = Column(DateTime, default = datetime.now(timezone.utc), nullable = False)
+    date_posted = Column(DateTime(timezone=True), nullable = False, index = True)
+    created_at = Column(DateTime(timezone=True), default = datetime.now(UTC), nullable = False)
 
     # PostgreSQL full-text search
     search_vector = mapped_column(
@@ -44,7 +44,7 @@ class JobSource(Base):
     source = Column(String(50), nullable = False, index = True)
     source_job_id = Column(String(255), nullable = False)
     url = Column(Text, nullable = False)
-    created_at = Column(DateTime, default = datetime.now(timezone.utc), nullable = False)
+    created_at = Column(DateTime(timezone=True), default = datetime.now(UTC), nullable = False)
 
     # relationship
     job = relationship("Job", back_populates = "sources")
@@ -60,8 +60,8 @@ class Application(Base):
     job_id = Column(UUID(as_uuid = True), ForeignKey('jobs.id', ondelete = 'CASCADE'), nullable = False, unique = True)
     status = Column(String(50), nullable = False, default = 'Not Applied', index = True)
     notes = Column(Text)
-    created_at = Column(DateTime, default = datetime.now(timezone.utc), nullable = False)
-    updated_at = Column(DateTime, default = datetime.now(timezone.utc), onupdate = datetime.now(timezone.utc), nullable = False)
+    created_at = Column(DateTime(timezone=True), default = datetime.now(UTC), nullable = False)
+    updated_at = Column(DateTime(timezone=True), default = datetime.now(UTC), onupdate = datetime.now(UTC), nullable = False)
 
     # Relationship
     job = relationship("Job", back_populates = "application")
@@ -80,5 +80,5 @@ class SearchCache(Base):
         nullable=False
     )
     hit_count = Column(Integer, default = 1)
-    created_at = Column(DateTime, default = datetime.now(timezone.utc), nullable = False)
-    updated_at = Column(DateTime, default = datetime.now(timezone.utc), onupdate = datetime.now(timezone.utc), nullable = False)
+    created_at = Column(DateTime(timezone=True), default = datetime.now(UTC), nullable = False)
+    updated_at = Column(DateTime(timezone=True), default = datetime.now(UTC), onupdate = datetime.now(UTC), nullable = False)
